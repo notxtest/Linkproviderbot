@@ -1,0 +1,6 @@
+pyrofork==2.3.67
+tgcrypto-pyrofork==1.2.7
+pymongo==4.13.2
+python-dotenv==1.0.1
+aiohttp
+flask
