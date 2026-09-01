@@ -12,9 +12,9 @@ from utils import encode_channel_id, decode_channel_id
 from datetime import datetime, timedelta
 from pyrogram.enums import ChatType
 
-app = Client(name="invite_bot", api_id=API_ID, api_hash=API_HASH,bot_token=BOT_TOKEN)
+app = Client(name="CineAccessBot", api_id=API_ID, api_hash=API_HASH,bot_token=BOT_TOKEN)
 mongo = MongoClient(MONGO_URI)
-db = mongo['invite_bot']
+db = mongo['CineAccessBot']
 users_col = db['users']
 channels_col = db['channels']
 
@@ -55,7 +55,7 @@ async def start_handler(_, message: Message):
                 creates_join_request=True,
                 name=link_name
             )
-            text = "𝖱𝖾𝗊𝗎𝖾𝗌𝗍 𝗍𝗈 𝖩𝗈𝗂𝗇: 𝗉𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @The_Ethans\n<i>𝖳𝗁𝗂𝗌 𝗅𝗂𝗇𝗄 𝗋𝖾𝗊𝗎𝗂𝗋𝖾𝗌 𝖺𝖽𝗆𝗂𝗇 𝖺𝗉𝗉𝗋𝗈𝗏𝖺𝗅. 𝖮𝗇𝗅𝗒 𝗒𝗈𝗎 𝖼𝖺𝗇 𝗎𝗌𝖾 𝗂𝗍.</i>"
+            text = "𝖱𝖾𝗊𝗎𝖾𝗌𝗍 𝗍𝗈 𝖩𝗈𝗂𝗇: 𝗉𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @CineVines_Bot\n<i>𝖳𝗁𝗂𝗌 𝗅𝗂𝗇𝗄 𝗋𝖾𝗊𝗎𝗂𝗋𝖾𝗌 𝖺𝖽𝗆𝗂𝗇 𝖺𝗉𝗉𝗋𝗈𝗏𝖺𝗅. 𝖮𝗇𝗅𝗒 𝗒𝗈𝗎 𝖼𝖺𝗇 𝗎𝗌𝖾 𝗂𝗍.</i>"
             if 'LINK_PIC' in globals() and LINK_PIC:
                 sent = await message.reply_photo(
                     LINK_PIC,
@@ -87,7 +87,7 @@ async def start_handler(_, message: Message):
                 expire_date=datetime.utcnow() + timedelta(minutes=10),
                 member_limit=1
             )
-            text = "𝖧𝖾𝗋𝖾 𝗂𝗌 𝗒𝗈𝗎𝗋 𝗅𝗂𝗇𝗄! 𝖢𝗅𝗂𝖼𝗄 𝖻𝖾𝗅𝗈𝗐 𝗍𝗈 𝗉𝗋𝗈𝖼𝖾𝖾𝗅: 𝗉𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @The_Ethans"
+            text = "𝖧𝖾𝗋𝖾 𝗂𝗌 𝗒𝗈𝗎𝗋 𝗅𝗂𝗇𝗄! 𝖢𝗅𝗂𝖼𝗄 𝖻𝖾𝗅𝗈𝗐 𝗍𝗈 𝗉𝗋𝗈𝖼𝖾𝖾𝗅: 𝗉𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @CineVines"
             if 'LINK_PIC' in globals() and LINK_PIC:
                 sent = await message.reply_photo(
                     LINK_PIC,
@@ -285,7 +285,7 @@ async def stats(_, message: Message):
 
 app.run()
 
-class InviteBot(Client):
+class CineAccessBot(Client):
     async def start(self):
         await super().start()
         usr_bot_me = await self.get_me()
@@ -304,24 +304,17 @@ class InviteBot(Client):
 
         self.set_parse_mode(ParseMode.HTML)
         self.LOGGER(__name__).info("""Bot Running..!\n
-█████╗ ███╗   ██╗██╗███╗   ███╗███████╗
-██╔══██╗████╗  ██║██║████╗ ████║██╔════╝
-███████║██╔██╗ ██║██║██╔████╔██║█████╗  
-██╔══██║██║╚██╗██║██║██║╚██╔╝██║██╔══╝  
-██║  ██║██║ ╚████║██║██║ ╚═╝ ██║███████╗
-╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚══════╝
-
-███████╗████████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
-██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
-███████╗   ██║   ███████║   ██║   ██║██║   ██║██╔██╗ ██║
-╚════██║   ██║   ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
-███████║   ██║   ██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
-╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+ ██████╗██╗███╗   ██╗███████╗██╗   ██╗██╗███╗   ██╗███████╗███████╗
+██╔════╝██║████╗  ██║██╔════╝██║   ██║██║████╗  ██║██╔════╝██╔════╝
+██║     ██║██╔██╗ ██║█████╗  ██║   ██║██║██╔██╗ ██║█████╗  ███████╗
+██║     ██║██║╚██╗██║██╔══╝  ╚██╗ ██╔╝██║██║╚██╗██║██╔══╝  ╚════██║
+╚██████╗██║██║ ╚████║███████╗ ╚████╔╝ ██║██║ ╚████║███████╗███████║
+ ╚═════╝╚═╝╚═╝  ╚═══╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
 """)
-        self.LOGGER(__name__).info(f"BOT DEPLOYED BY @AS_NETWORKS")
+        self.LOGGER(__name__).info(f"BOT DEPLOYED BY @CineVines")
 
         self.username = usr_bot_me.username
-        self.LOGGER(__name__).info(f"Bot Running..! Made by @Animes_Station")   
+        self.LOGGER(__name__).info(f"Bot Running..! Made by @CineVines")   
 
         # Start Web Server
         app = web.AppRunner(await web_server())
