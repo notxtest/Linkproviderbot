@@ -22,7 +22,7 @@ channels_col = db['channels']
 async def start_handler(_, message: Message):
     users_col.update_one({"_id": message.from_user.id}, {"$set": {"name": message.from_user.first_name}}, upsert=True)
     args = message.text.split(" ", 1)
-    start_text = ("<b><blockquote>ʜᴇʏ {message.from_user.first_name}! 👋🏻\nᴡᴇʟᴄᴏᴍᴇ ᴛᴏ @CineVines — ᴀ sᴍᴀʀᴛ ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ ʙᴏᴛ.\nɢᴇᴛ ᴛᴇᴍᴘᴏʀᴀʀʏ ᴀɴᴅ sᴇᴄᴜʀᴇ ʟɪɴᴋs ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ᴜɴɴᴇᴄᴇssᴀʀʏ ʜᴀssʟᴇ. 🚀</blockquote></b>")
+    start_text = ("<b><blockquote>ʜᴇʏ {name}!👋🏻\nᴡᴇʟᴄᴏᴍᴇ ᴛᴏ @CineVines — ᴀ sᴍᴀʀᴛ ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ ʙᴏᴛ.\nɢᴇᴛ ᴛᴇᴍᴘᴏʀᴀʀʏ ᴀɴᴅ sᴇᴄᴜʀᴇ ʟɪɴᴋs ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ᴜɴɴᴇᴄᴇssᴀʀʏ ʜᴀssʟᴇ. 🚀</blockquote></b>")
     if len(args) == 1:
         return await message.reply_photo(
             START_PIC,
