@@ -1,12 +1,12 @@
-# bot.py
 import asyncio
+import os
+from threading import Thread
 from aiohttp import web
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pymongo import MongoClient
 from datetime import datetime
 import time
-import asyncio
 from config import API_ID, API_HASH, BOT_TOKEN, MONGO_URI, ADMINS, START_PIC, LINK_PIC
 from utils import encode_channel_id, decode_channel_id
 from datetime import datetime, timedelta
@@ -283,7 +283,21 @@ async def stats(_, message: Message):
     channel_count = channels_col.count_documents({})
     await message.reply(f"𝖴𝗌𝖾𝗋𝗌: {user_count}\n𝖢𝗁𝖺𝗇𝗇𝖾𝗅𝗌: {channel_count}")
 
+
+# ============ RENDER WEB SERVER ============
+from webhook import app as web_app
+
+PORT = int(os.getenv("PORT", "8000"))
+
+def run_web():
+    web_app.run(host="0.0.0.0", port=PORT)
+
+
+Thread(target=run_web, daemon=True).start()
+
+# ============ START TELEGRAM BOT ============
 app.run()
+
 
 class CineAccessBot(Client):
     async def start(self):
@@ -341,3 +355,4 @@ class CineAccessBot(Client):
             self.LOGGER(__name__).info("Shutting down...")
         finally:
             loop.run_until_complete(self.stop())
+
