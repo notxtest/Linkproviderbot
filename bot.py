@@ -22,7 +22,7 @@ channels_col = db['channels']
 async def start_handler(_, message: Message):
     users_col.update_one({"_id": message.from_user.id}, {"$set": {"name": message.from_user.first_name}}, upsert=True)
     args = message.text.split(" ", 1)
-    start_text = ("<b><blockquote>𝖡𝖺𝗄𝗄𝖺 {mention}!\n\n𝖨’𝗆 𝗍𝗁𝖾 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 𝖫𝗂𝗇𝗄 𝖡𝗈𝗍 — 𝖨 𝖼𝗋𝖾𝖺𝗍𝖾 𝗌𝗆𝖺𝗋𝗍 𝗋𝖾𝖽𝗂𝗋𝖾𝖼𝗍 𝗅𝗂𝗇𝗄𝗌 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝖳𝖾𝗅𝖾𝗀𝗋𝖺𝗆 𝖼𝗁𝖺𝗇𝗇𝖾𝗅𝗌 𝗍𝗈 𝗁𝖾𝗅𝗉 𝖺𝗏𝗈𝗂𝖽 𝖼𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍 𝗉𝗋𝗈𝖻𝗅𝖾𝗆𝗌 𝖺𝗇𝖽 𝗄𝖾𝖾𝗉 𝗍𝗁𝗂𝗇𝗀𝗌 𝗌𝖺𝖿𝖾.</blockquote></b>")
+    start_text = ("<b><blockquote>ʜᴇʏ {message.from_user.first_name}! 👋🏻\nᴡᴇʟᴄᴏᴍᴇ ᴛᴏ @CineVines — ᴀ sᴍᴀʀᴛ ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ ʙᴏᴛ.\nɢᴇᴛ ᴛᴇᴍᴘᴏʀᴀʀʏ ᴀɴᴅ sᴇᴄᴜʀᴇ ʟɪɴᴋs ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ᴜɴɴᴇᴄᴇssᴀʀʏ ʜᴀssʟᴇ. 🚀</blockquote></b>")
     if len(args) == 1:
         return await message.reply_photo(
             START_PIC,
@@ -87,7 +87,7 @@ async def start_handler(_, message: Message):
                 expire_date=datetime.utcnow() + timedelta(minutes=10),
                 member_limit=1
             )
-            text = "𝖧𝖾𝗋𝖾 𝗂𝗌 𝗒𝗈𝗎𝗋 𝗅𝗂𝗇𝗄! 𝖢𝗅𝗂𝖼𝗄 𝖻𝖾𝗅𝗈𝗐 𝗍𝗈 𝗉𝗋𝗈𝖼𝖾𝖾𝗅: 𝗉𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @CineVines"
+            text = "<b><blockquote>ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ! ᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ᴛᴏ ᴘʀᴏᴄᴇᴇᴅ:\n⏳ ᴛʜɪs ʟɪɴᴋ ᴡɪʟʟ ᴇxᴘɪʀᴇ ɪɴ 10 ᴍɪɴᴜᴛᴇs.\nᴘᴏᴡᴇʀᴇᴅ ʙʏ @CineVines</blockquote></b>"
             if 'LINK_PIC' in globals() and LINK_PIC:
                 sent = await message.reply_photo(
                     LINK_PIC,
@@ -355,4 +355,3 @@ class CineAccessBot(Client):
             self.LOGGER(__name__).info("Shutting down...")
         finally:
             loop.run_until_complete(self.stop())
-
