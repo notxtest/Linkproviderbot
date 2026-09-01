@@ -2,7 +2,7 @@ import asyncio
 import os
 from threading import Thread
 from aiohttp import web
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pymongo import MongoClient
 from datetime import datetime
@@ -22,11 +22,14 @@ channels_col = db['channels']
 async def start_handler(_, message: Message):
     users_col.update_one({"_id": message.from_user.id}, {"$set": {"name": message.from_user.first_name}}, upsert=True)
     args = message.text.split(" ", 1)
-    start_text = ("<b><blockquote>ʜᴇʏ {name}!👋🏻\nᴡᴇʟᴄᴏᴍᴇ ᴛᴏ @CineVines — ᴀ sᴍᴀʀᴛ ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ ʙᴏᴛ.\nɢᴇᴛ ᴛᴇᴍᴘᴏʀᴀʀʏ ᴀɴᴅ sᴇᴄᴜʀᴇ ʟɪɴᴋs ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ᴜɴɴᴇᴄᴇssᴀʀʏ ʜᴀssʟᴇ. 🚀</blockquote></b>")
+    name = message.from_user.first_name
+    start_text = f"<b><blockquote>ʜᴇʏ {name}! 👋🏻\nᴡᴇʟᴄᴏᴍᴇ ᴛᴏ @CineVines — ᴀ sᴍᴀʀᴛ ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ ʙᴏᴛ.\nɢᴇᴛ ᴛᴇᴍᴘᴏʀᴀʀʏ ᴀɴᴅ sᴇᴄᴜʀᴇ ʟɪɴᴋs ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ᴜɴɴᴇᴄᴇssᴀʀʏ ʜᴀssʟᴇ. 🚀</blockquote></b>"
     if len(args) == 1:
         return await message.reply_photo(
             START_PIC,
-            caption=start_text
+            caption=start_text,
+            message_effect_id=5104841245755180586,
+            parse_mode=enums.ParseMode.HTML
         )
     param = args[1]
     is_req = False
@@ -55,20 +58,22 @@ async def start_handler(_, message: Message):
                 creates_join_request=True,
                 name=link_name
             )
-            text = "𝖱𝖾𝗊𝗎𝖾𝗌𝗍 𝗍𝗈 𝖩𝗈𝗂𝗇: 𝗉𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @CineVines_Bot\n<i>𝖳𝗁𝗂𝗌 𝗅𝗂𝗇𝗄 𝗋𝖾𝗊𝗎𝗂𝗋𝖾𝗌 𝖺𝖽𝗆𝗂𝗇 𝖺𝗉𝗉𝗋𝗈𝗏𝖺𝗅. 𝖮𝗇𝗅𝗒 𝗒𝗈𝗎 𝖼𝖺𝗇 𝗎𝗌𝖾 𝗂𝗍.</i>"
+            text = "<blockquote><b>🔐 ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ</b>\nʏᴏᴜʀ ʀᴇǫᴜᴇsᴛ ʜᴀs ʙᴇᴇɴ sᴇɴᴛ ᴛᴏ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ᴀᴅᴍɪɴ. ✅\n<i>⏳ ᴛʜɪs ʟɪɴᴋ ʀᴇǫᴜɪʀᴇs ᴀᴅᴍɪɴ ᴀᴘᴘʀᴏᴠᴀʟ. ᴏɴʟʏ ʏᴏᴜ ᴄᴀɴ ᴜsᴇ ᴛʜɪs ʟɪɴᴋ.</i>\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ @CineVines_Bot</b></blockquote>"
             if 'LINK_PIC' in globals() and LINK_PIC:
                 sent = await message.reply_photo(
                     LINK_PIC,
                     caption=text,
+                    parse_mode=enums.ParseMode.HTML,
+                    message_effect_id=5104841245755180586,
                     reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("「𝖱𝖾𝗊𝗎𝖾𝗌𝗍 𝗍𝗈 𝖩𝗈𝗂𝗇」", url=invite.invite_link)]]
+                        [[InlineKeyboardButton("「ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ」", url=invite.invite_link)]]
                     )
                 )
             else:
                 sent = await message.reply(
                     text,
                     reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("「𝖱𝖾𝗊𝗎𝖾𝗌𝗍 𝗍𝗈 𝖩𝗈𝗂𝗇」", url=invite.invite_link)]]
+                        [[InlineKeyboardButton("「ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ」", url=invite.invite_link)]]
                     ),
                     disable_web_page_preview=True
                 )
@@ -92,15 +97,17 @@ async def start_handler(_, message: Message):
                 sent = await message.reply_photo(
                     LINK_PIC,
                     caption=text,
+                    parse_mode=enums.ParseMode.HTML,
+                    message_effect_id=5104841245755180586,
                     reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("「𝖩𝗈𝗂𝗇 𝖢𝗁𝖺𝗇𝗇𝖾𝗅」", url=invite.invite_link)]]
+                        [[InlineKeyboardButton("「ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ」", url=invite.invite_link)]]
                     )
                 )
             else:
                 sent = await message.reply(
                     text,
                     reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("「𝖩𝗈𝗂𝗇 𝖢𝗁𝖺𝗇𝗇𝖾𝗅」", url=invite.invite_link)]]
+                        [[InlineKeyboardButton("「ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ」", url=invite.invite_link)]]
                     ),
                     disable_web_page_preview=True
                 )
@@ -348,7 +355,7 @@ class CineAccessBot(Client):
         """Run the bot."""
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.start())
-        self.LOGGER(__name__).info("Bot is now running. Thanks to @IntrovertSama")
+        self.LOGGER(__name__).info("Bot is now running. Thanks to @CineVines")
         try:
             loop.run_forever()
         except KeyboardInterrupt:
