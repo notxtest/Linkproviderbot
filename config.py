@@ -11,5 +11,5 @@ ADMINS = [
     if x.strip()
 ]
 
-START_PIC = os.getenv("START_PIC", "https://litter.catbox.moe/bxry4e.jpg")
-LINK_PIC = os.getenv("LINK_PIC", "https://files.catbox.moe/gyklg0.jpg")
+START_PIC = os.getenv("START_PIC", "https://graph.org/file/9b84ec73a967e27c15de9-d1e9e4da7828acaedc.jpg")
+LINK_PIC = os.getenv("LINK_PIC", "https://graph.org/file/3106ef9a5e09dd9f94500-b6461844ac16ddb6c7.jpg")
